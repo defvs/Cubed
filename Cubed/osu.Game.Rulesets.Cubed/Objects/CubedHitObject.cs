@@ -6,13 +6,20 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using osuTK;
 
-namespace osu.Game.Rulesets.Cubed.Objects {
-	public class CubedHitObject : HitObject, IHasPosition {
-		public override Judgement CreateJudgement() => new Judgement();
+namespace osu.Game.Rulesets.Cubed.Objects
+{
+    public class CubedHitObject : HitObject
+    {
+        public override Judgement CreateJudgement() => new Judgement();
 
-		public Vector2 Position { get; set; }
+        /**
+         * X position goes from 0 to 3, starting from X=0 on the left and increasing horizontally rightwards
+         */
+        public int PositionX;
 
-		public float X => Position.X;
-		public float Y => Position.Y;
-	}
+        /**
+         * Y position goes from 0 to 3, starting from Y=0 at the top and increasing vertically downwards
+         */
+        public int PositionY;
+    }
 }

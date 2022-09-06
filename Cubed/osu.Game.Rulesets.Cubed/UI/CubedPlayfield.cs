@@ -2,17 +2,51 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Effects;
+using osu.Game.Rulesets.Cubed.UI.HUD;
 using osu.Game.Rulesets.UI;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Cubed.UI {
 	[Cached]
 	public class CubedPlayfield : Playfield {
-		[BackgroundDependencyLoader]
+        public CubedPlayfield()
+        {
+            InternalChildren = new Drawable[]
+            {
+                new Container
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                    Masking = true,
+                    CornerRadius = 7,
+                    BorderThickness = 1.2f,
+                    BorderColour = Color4.White,
+                    EdgeEffect = new EdgeEffectParameters
+                    {
+                        Hollow = true,
+                        Radius = 10,
+                        Colour = Color4.Black.Opacity(0.4f),
+                        Type = EdgeEffectType.Shadow,
+                    },
+                    Children = new Drawable[]
+                    {
+                        new PlayfieldBackground(),
+                        HitObjectContainer
+                    }
+                }
+            };
+        }
+
+        [BackgroundDependencyLoader]
 		private void load() {
 			AddRangeInternal(new Drawable[] {
 				HitObjectContainer,
 			});
 		}
-	}
+    }
 }
