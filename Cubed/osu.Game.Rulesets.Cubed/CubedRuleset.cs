@@ -21,7 +21,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Cubed {
 	public class CubedRuleset : Ruleset {
-		public override string Description => "a very cubedruleset ruleset";
+		public override string Description => "Tap the squares!";
 
 		public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) =>
 			new DrawableCubedRuleset(this, beatmap, mods);
