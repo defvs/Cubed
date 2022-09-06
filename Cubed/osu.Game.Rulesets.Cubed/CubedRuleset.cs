@@ -19,66 +19,56 @@ using osu.Game.Rulesets.UI;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Cubed
-{
-    public class CubedRuleset : Ruleset
-    {
-        public override string Description => "a very cubedruleset ruleset";
+namespace osu.Game.Rulesets.Cubed {
+	public class CubedRuleset : Ruleset {
+		public override string Description => "a very cubedruleset ruleset";
 
-        public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) =>
-            new DrawableCubedRuleset(this, beatmap, mods);
+		public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) =>
+			new DrawableCubedRuleset(this, beatmap, mods);
 
-        public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) =>
-            new CubedBeatmapConverter(beatmap, this);
+		public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) =>
+			new CubedBeatmapConverter(beatmap, this);
 
-        public override DifficultyCalculator CreateDifficultyCalculator(IWorkingBeatmap beatmap) =>
-            new CubedDifficultyCalculator(RulesetInfo, beatmap);
+		public override DifficultyCalculator CreateDifficultyCalculator(IWorkingBeatmap beatmap) =>
+			new CubedDifficultyCalculator(RulesetInfo, beatmap);
 
-        public override IEnumerable<Mod> GetModsFor(ModType type)
-        {
-            switch (type)
-            {
-                case ModType.Automation:
-                    return new[] { new CubedModAutoplay() };
+		public override IEnumerable<Mod> GetModsFor(ModType type) {
+			switch (type) {
+				case ModType.Automation:
+					return new[] { new CubedModAutoplay() };
 
-                default:
-                    return Array.Empty<Mod>();
-            }
-        }
+				default:
+					return Array.Empty<Mod>();
+			}
+		}
 
-        public override string ShortName => "cubedruleset";
+		public override string ShortName => "cubedruleset";
 
-        public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
-        {
-            new KeyBinding(InputKey.Z, CubedAction.Button1),
-            new KeyBinding(InputKey.X, CubedAction.Button2),
-        };
+		public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[] {
+			new KeyBinding(InputKey.Z, CubedAction.Button1),
+			new KeyBinding(InputKey.X, CubedAction.Button2),
+		};
 
-        public override Drawable CreateIcon() => new Icon(ShortName[0]);
+		public override Drawable CreateIcon() => new Icon(ShortName[0]);
 
-        public class Icon : CompositeDrawable
-        {
-            public Icon(char c)
-            {
-                InternalChildren = new Drawable[]
-                {
-                    new Circle
-                    {
-                        Size = new Vector2(20),
-                        Colour = Color4.White,
-                    },
-                    new SpriteText
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Text = c.ToString(),
-                        Font = OsuFont.Default.With(size: 18)
-                    }
-                };
-            }
-        }
+		public class Icon : CompositeDrawable {
+			public Icon(char c) {
+				InternalChildren = new Drawable[] {
+					new Circle {
+						Size = new Vector2(20),
+						Colour = Color4.White,
+					},
+					new SpriteText {
+						Anchor = Anchor.Centre,
+						Origin = Anchor.Centre,
+						Text = c.ToString(),
+						Font = OsuFont.Default.With(size: 18)
+					}
+				};
+			}
+		}
 
-        // Leave this line intact. It will bake the correct version into the ruleset on each build/release.
-        public override string RulesetAPIVersionSupported => CURRENT_RULESET_API_VERSION;
-    }
+		// Leave this line intact. It will bake the correct version into the ruleset on each build/release.
+		public override string RulesetAPIVersionSupported => CURRENT_RULESET_API_VERSION;
+	}
 }

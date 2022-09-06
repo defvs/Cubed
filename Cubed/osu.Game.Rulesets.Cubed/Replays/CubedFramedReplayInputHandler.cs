@@ -8,29 +8,22 @@ using osu.Framework.Utils;
 using osu.Game.Replays;
 using osu.Game.Rulesets.Replays;
 
-namespace osu.Game.Rulesets.Cubed.Replays
-{
-    public class CubedFramedReplayInputHandler : FramedReplayInputHandler<CubedReplayFrame>
-    {
-        public CubedFramedReplayInputHandler(Replay replay)
-            : base(replay)
-        {
-        }
+namespace osu.Game.Rulesets.Cubed.Replays {
+	public class CubedFramedReplayInputHandler : FramedReplayInputHandler<CubedReplayFrame> {
+		public CubedFramedReplayInputHandler(Replay replay)
+			: base(replay) {}
 
-        protected override bool IsImportant(CubedReplayFrame frame) => frame.Actions.Any();
+		protected override bool IsImportant(CubedReplayFrame frame) => frame.Actions.Any();
 
-        protected override void CollectReplayInputs(List<IInput> inputs)
-        {
-            var position = Interpolation.ValueAt(CurrentTime, StartFrame.Position, EndFrame.Position, StartFrame.Time, EndFrame.Time);
+		protected override void CollectReplayInputs(List<IInput> inputs) {
+			var position = Interpolation.ValueAt(CurrentTime, StartFrame.Position, EndFrame.Position, StartFrame.Time, EndFrame.Time);
 
-            inputs.Add(new MousePositionAbsoluteInput
-            {
-                Position = GamefieldToScreenSpace(position),
-            });
-            inputs.Add(new ReplayState<CubedAction>
-            {
-                PressedActions = CurrentFrame?.Actions ?? new List<CubedAction>(),
-            });
-        }
-    }
+			inputs.Add(new MousePositionAbsoluteInput {
+				Position = GamefieldToScreenSpace(position),
+			});
+			inputs.Add(new ReplayState<CubedAction> {
+				PressedActions = CurrentFrame?.Actions ?? new List<CubedAction>(),
+			});
+		}
+	}
 }

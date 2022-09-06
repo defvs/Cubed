@@ -14,22 +14,18 @@ using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 
-namespace osu.Game.Rulesets.Cubed.UI
-{
-    [Cached]
-    public class DrawableCubedRuleset : DrawableRuleset<CubedHitObject>
-    {
-        public DrawableCubedRuleset(CubedRuleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
-            : base(ruleset, beatmap, mods)
-        {
-        }
+namespace osu.Game.Rulesets.Cubed.UI {
+	[Cached]
+	public class DrawableCubedRuleset : DrawableRuleset<CubedHitObject> {
+		public DrawableCubedRuleset(CubedRuleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
+			: base(ruleset, beatmap, mods) {}
 
-        protected override Playfield CreatePlayfield() => new CubedPlayfield();
+		protected override Playfield CreatePlayfield() => new CubedPlayfield();
 
-        protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new CubedFramedReplayInputHandler(replay);
+		protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new CubedFramedReplayInputHandler(replay);
 
-        public override DrawableHitObject<CubedHitObject> CreateDrawableRepresentation(CubedHitObject h) => new DrawableCubedHitObject(h);
+		public override DrawableHitObject<CubedHitObject> CreateDrawableRepresentation(CubedHitObject h) => new DrawableCubedHitObject(h);
 
-        protected override PassThroughInputManager CreateInputManager() => new CubedInputManager(Ruleset?.RulesetInfo);
-    }
+		protected override PassThroughInputManager CreateInputManager() => new CubedInputManager(Ruleset?.RulesetInfo);
+	}
 }
