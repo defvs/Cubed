@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Cubed.UI {
                     Masking = true,
                     CornerRadius = 7,
                     BorderThickness = 1.2f,
-                    BorderColour = Color4.White,
+                    BorderColour = Color4.Transparent,
                     EdgeEffect = new EdgeEffectParameters
                     {
                         Hollow = true,
@@ -35,8 +35,7 @@ namespace osu.Game.Rulesets.Cubed.UI {
                     },
                     Children = new Drawable[]
                     {
-                        new PlayfieldBackground(),
-                        HitObjectContainer
+                        new PlayfieldBackground()
                     }
                 }
             };

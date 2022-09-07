@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Cubed.Beatmaps {
 		public CubedBeatmapConverter(IBeatmap beatmap, Ruleset ruleset)
 			: base(beatmap, ruleset) {}
 
-        public override bool CanConvert() => Beatmap.HitObjects.All(o => o is IHasPosition && !(o is IHasPath) && !(o is IHasDuration));
+        public override bool CanConvert() => Beatmap.HitObjects.Any(o => o is IHasPosition);
 
 		protected override IEnumerable<CubedHitObject> ConvertHitObject(
 			HitObject original,

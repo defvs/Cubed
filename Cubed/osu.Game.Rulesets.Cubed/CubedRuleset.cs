@@ -66,26 +66,7 @@ namespace osu.Game.Rulesets.Cubed {
             new KeyBinding(InputKey.M, CubedAction.X3Y3)
 		};
 
-		public override Drawable CreateIcon() => new Icon(ShortName[0]);
-
-		public class Icon : CompositeDrawable {
-			public Icon(char c) {
-				InternalChildren = new Drawable[] {
-					new Circle {
-						Size = new Vector2(20),
-						Colour = Color4.White,
-					},
-					new SpriteText {
-						Anchor = Anchor.Centre,
-						Origin = Anchor.Centre,
-						Text = c.ToString(),
-						Font = OsuFont.Default.With(size: 18)
-					}
-				};
-			}
-		}
-
-		// Leave this line intact. It will bake the correct version into the ruleset on each build/release.
+		public override Drawable CreateIcon() => new SpriteIcon { Icon = OsuIcon.RulesetOsu };
 		public override string RulesetAPIVersionSupported => CURRENT_RULESET_API_VERSION;
 	}
 }
