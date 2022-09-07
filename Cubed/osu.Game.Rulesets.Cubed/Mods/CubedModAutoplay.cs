@@ -9,6 +9,6 @@ using osu.Game.Rulesets.Mods;
 namespace osu.Game.Rulesets.Cubed.Mods {
 	public class CubedModAutoplay : ModAutoplay {
 		public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
-			=> new ModReplayData(new CubedAutoGenerator(beatmap).Generate(), new ModCreatedUser { Username = "sample" });
+			=> new ModReplayData(new CubedAutoGenerator(beatmap).Generate(), new ModCreatedUser { Username = "Concierge" });
 	}
 }
