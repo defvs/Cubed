@@ -8,23 +8,28 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Cubed.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
-using osuTK;
 
 namespace osu.Game.Rulesets.Cubed.Beatmaps {
 	public class CubedBeatmapConverter : BeatmapConverter<CubedHitObject> {
 		public CubedBeatmapConverter(IBeatmap beatmap, Ruleset ruleset)
 			: base(beatmap, ruleset) {}
 
-		// todo: Check for conversion types that should be supported (ie. Beatmap.HitObjects.Any(h => h is IHasXPosition))
-		// https://github.com/ppy/osu/tree/master/osu.Game/Rulesets/Objects/Types
-		public override bool CanConvert() => false;
+        public override bool CanConvert() => Beatmap.HitObjects.All(o => o is IHasPosition && !(o is IHasPath) && !(o is IHasDuration));
 
 		protected override IEnumerable<CubedHitObject> ConvertHitObject(
 			HitObject original,
 			IBeatmap beatmap,
 			CancellationToken cancellationToken
 		) {
-            return Enumerable.Empty<CubedHitObject>();
-		}
+            if (!(original is IHasPosition positionedObj)) yield break;
+
+            yield return new CubedHitObject
+            {
+                PositionX = (int)(positionedObj.X / 128),
+                PositionY = (int)(positionedObj.Y / 96),
+                StartTime = original.StartTime,
+                HitWindows = original.HitWindows
+            };
+        }
 	}
 }

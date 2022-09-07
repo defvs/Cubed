@@ -14,10 +14,10 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables {
 			Size = new Vector2(40);
 			Origin = Anchor.Centre;
 
-			Position = hitObject.Position;
+            Position = Vector2.Zero; //hitObject.Position;
 
-			// todo: add visuals.
-		}
+            // todo: add visuals.
+        }
 
 		protected override void CheckForResult(bool userTriggered, double timeOffset) {
 			if (timeOffset >= 0)
