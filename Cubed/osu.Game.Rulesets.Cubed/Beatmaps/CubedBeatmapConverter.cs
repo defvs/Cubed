@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Cubed.Objects;
@@ -16,18 +17,14 @@ namespace osu.Game.Rulesets.Cubed.Beatmaps {
 
 		// todo: Check for conversion types that should be supported (ie. Beatmap.HitObjects.Any(h => h is IHasXPosition))
 		// https://github.com/ppy/osu/tree/master/osu.Game/Rulesets/Objects/Types
-		public override bool CanConvert() => true;
+		public override bool CanConvert() => false;
 
 		protected override IEnumerable<CubedHitObject> ConvertHitObject(
 			HitObject original,
 			IBeatmap beatmap,
 			CancellationToken cancellationToken
 		) {
-			yield return new CubedHitObject {
-				Samples = original.Samples,
-				StartTime = original.StartTime,
-				Position = (original as IHasPosition)?.Position ?? Vector2.Zero,
-			};
+            return Enumerable.Empty<CubedHitObject>();
 		}
 	}
 }
