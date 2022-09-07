@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Primitives;
 using osu.Game.Rulesets.Cubed.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
@@ -14,28 +15,32 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
 {
     public class DrawableCubedHitObject : DrawableHitObject<CubedHitObject>
     {
-        private Container childContainer;
         private CubedNotePiece notePiece;
+        private CubedHitObject hitObject;
 
         public DrawableCubedHitObject(CubedHitObject hitObject)
             : base(hitObject)
         {
-            Size = new Vector2(40);
-            Origin = Anchor.Centre;
-            Position = hitObject.Position;
+            this.hitObject = hitObject;
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            AddInternal(childContainer = new Container
-                {
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    RelativeSizeAxes = Axes.Both,
-                    Child = notePiece = new CubedNotePiece()
-                }
-            );
+            Size = new Vector2(100);
+            RelativePositionAxes = Axes.Both;
+            Anchor = Anchor.Centre;
+            Origin = Anchor.Centre;
+            Position = hitObject.PositionRelative;
+            Alpha = 0;
+            Scale = Vector2.Zero;
+            AddInternal(notePiece = new CubedNotePiece());
+        }
+
+        protected override void UpdateInitialTransforms()
+        {
+            this.FadeInFromZero(200);
+            this.ScaleTo(Vector2.One, 200);
         }
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
@@ -47,7 +52,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
 
         protected override void UpdateHitStateTransforms(ArmedState state)
         {
-            const double duration = 1000;
+            const double duration = 200;
 
             switch (state)
             {

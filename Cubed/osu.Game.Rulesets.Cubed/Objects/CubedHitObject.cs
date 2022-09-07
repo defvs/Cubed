@@ -12,7 +12,8 @@ namespace osu.Game.Rulesets.Cubed.Objects
     {
         public override Judgement CreateJudgement() => new Judgement();
 
-        public Vector2 Position => new Vector2(PositionX * 128, PositionY * 96);
+        // ReSharper disable once PossibleLossOfFraction
+        public Vector2 PositionRelative => new Vector2(PositionX / 3f, PositionY / 3f);
 
         /**
          * X position goes from 0 to 3, starting from X=0 on the left and increasing horizontally rightwards

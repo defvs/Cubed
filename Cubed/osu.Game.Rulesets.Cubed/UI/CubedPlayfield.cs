@@ -10,14 +10,16 @@ using osu.Game.Rulesets.Cubed.UI.HUD;
 using osu.Game.Rulesets.UI;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Cubed.UI {
-	[Cached]
-	public class CubedPlayfield : Playfield {
+namespace osu.Game.Rulesets.Cubed.UI
+{
+    [Cached]
+    public class CubedPlayfield : Playfield
+    {
         public CubedPlayfield()
         {
             InternalChildren = new Drawable[]
             {
-                new Container
+                mainContainer = new Container
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -25,7 +27,8 @@ namespace osu.Game.Rulesets.Cubed.UI {
                     Masking = true,
                     CornerRadius = 7,
                     BorderThickness = 1.2f,
-                    BorderColour = Color4.Transparent,
+                    BorderColour = Color4.White,
+                    Colour = Color4.White,
                     EdgeEffect = new EdgeEffectParameters
                     {
                         Hollow = true,
@@ -41,11 +44,12 @@ namespace osu.Game.Rulesets.Cubed.UI {
             };
         }
 
+        private readonly Container mainContainer;
+
         [BackgroundDependencyLoader]
-		private void load() {
-			AddRangeInternal(new Drawable[] {
-				HitObjectContainer,
-			});
-		}
+        private void load()
+        {
+            mainContainer.Add(HitObjectContainer);
+        }
     }
 }
