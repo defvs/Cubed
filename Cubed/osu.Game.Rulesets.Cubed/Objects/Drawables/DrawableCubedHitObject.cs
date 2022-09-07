@@ -28,13 +28,14 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
         [BackgroundDependencyLoader]
         private void load()
         {
-            InternalChild = childContainer = new Container
-            {
-                Origin = Anchor.Centre,
-                Anchor = Anchor.Centre,
-                RelativeSizeAxes = Axes.Both,
-                Child = notePiece = new CubedNotePiece()
-            };
+            AddInternal(childContainer = new Container
+                {
+                    Origin = Anchor.Centre,
+                    Anchor = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                    Child = notePiece = new CubedNotePiece()
+                }
+            );
         }
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
