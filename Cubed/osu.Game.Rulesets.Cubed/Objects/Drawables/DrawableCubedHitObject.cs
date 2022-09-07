@@ -1,43 +1,64 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Cubed.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Cubed.Objects.Drawables {
-	public class DrawableCubedHitObject : DrawableHitObject<CubedHitObject> {
-		public DrawableCubedHitObject(CubedHitObject hitObject)
-			: base(hitObject) {
-			Size = new Vector2(40);
-			Origin = Anchor.Centre;
+namespace osu.Game.Rulesets.Cubed.Objects.Drawables
+{
+    public class DrawableCubedHitObject : DrawableHitObject<CubedHitObject>
+    {
+        private Container childContainer;
+        private CubedNotePiece notePiece;
 
-            Position = Vector2.Zero; //hitObject.Position;
-
-            // todo: add visuals.
+        public DrawableCubedHitObject(CubedHitObject hitObject)
+            : base(hitObject)
+        {
+            Size = new Vector2(40);
+            Origin = Anchor.Centre;
+            Position = hitObject.Position;
         }
 
-		protected override void CheckForResult(bool userTriggered, double timeOffset) {
-			if (timeOffset >= 0)
-				// todo: implement judgement logic
-				ApplyResult(r => r.Type = HitResult.Perfect);
-		}
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            InternalChild = childContainer = new Container
+            {
+                Origin = Anchor.Centre,
+                Anchor = Anchor.Centre,
+                RelativeSizeAxes = Axes.Both,
+                Child = notePiece = new CubedNotePiece()
+            };
+        }
 
-		protected override void UpdateHitStateTransforms(ArmedState state) {
-			const double duration = 1000;
+        protected override void CheckForResult(bool userTriggered, double timeOffset)
+        {
+            if (timeOffset >= 0)
+                // todo: implement judgement logic
+                ApplyResult(r => r.Type = HitResult.Perfect);
+        }
 
-			switch (state) {
-				case ArmedState.Hit:
-					this.FadeOut(duration, Easing.OutQuint).Expire();
-					break;
+        protected override void UpdateHitStateTransforms(ArmedState state)
+        {
+            const double duration = 1000;
 
-				case ArmedState.Miss:
-					this.FadeColour(Color4.Red, duration);
-					this.FadeOut(duration, Easing.InQuint).Expire();
-					break;
-			}
-		}
-	}
+            switch (state)
+            {
+                case ArmedState.Hit:
+                    this.FadeOut(duration, Easing.OutQuint).Expire();
+                    break;
+
+                case ArmedState.Miss:
+                    this.FadeColour(Color4.Red, duration);
+                    this.FadeOut(duration, Easing.InQuint).Expire();
+                    break;
+            }
+        }
+    }
 }
