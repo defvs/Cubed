@@ -16,11 +16,6 @@ namespace osu.Game.Rulesets.Cubed.Replays {
 		protected override bool IsImportant(CubedReplayFrame frame) => frame.Actions.Any();
 
 		protected override void CollectReplayInputs(List<IInput> inputs) {
-			var position = Interpolation.ValueAt(CurrentTime, StartFrame.Position, EndFrame.Position, StartFrame.Time, EndFrame.Time);
-
-			inputs.Add(new MousePositionAbsoluteInput {
-				Position = GamefieldToScreenSpace(position),
-			});
 			inputs.Add(new ReplayState<CubedAction> {
 				PressedActions = CurrentFrame?.Actions ?? new List<CubedAction>(),
 			});
