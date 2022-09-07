@@ -45,8 +45,25 @@ namespace osu.Game.Rulesets.Cubed {
 		public override string ShortName => "cubedruleset";
 
 		public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[] {
-			new KeyBinding(InputKey.Z, CubedAction.Button1),
-			new KeyBinding(InputKey.X, CubedAction.Button2),
+			new KeyBinding(InputKey.Number4, CubedAction.X0Y0),
+			new KeyBinding(InputKey.Number5, CubedAction.X1Y0),
+            new KeyBinding(InputKey.Number6, CubedAction.X2Y0),
+            new KeyBinding(InputKey.Number7, CubedAction.X3Y0),
+
+            new KeyBinding(InputKey.R, CubedAction.X0Y1),
+            new KeyBinding(InputKey.T, CubedAction.X1Y1),
+            new KeyBinding(InputKey.Y, CubedAction.X2Y1),
+            new KeyBinding(InputKey.U, CubedAction.X3Y1),
+
+            new KeyBinding(InputKey.F, CubedAction.X0Y2),
+            new KeyBinding(InputKey.G, CubedAction.X1Y2),
+            new KeyBinding(InputKey.H, CubedAction.X2Y2),
+            new KeyBinding(InputKey.J, CubedAction.X3Y2),
+
+            new KeyBinding(InputKey.V, CubedAction.X0Y3),
+            new KeyBinding(InputKey.B, CubedAction.X1Y3),
+            new KeyBinding(InputKey.N, CubedAction.X2Y3),
+            new KeyBinding(InputKey.M, CubedAction.X3Y3)
 		};
 
 		public override Drawable CreateIcon() => new Icon(ShortName[0]);
