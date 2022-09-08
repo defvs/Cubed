@@ -29,8 +29,8 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
         {
             Size = new Vector2(100);
             RelativePositionAxes = Axes.Both;
-            Anchor = Anchor.Centre;
-            Origin = Anchor.Centre;
+            Anchor = Anchor.TopLeft;
+            Origin = Anchor.TopLeft;
             Position = hitObject.PositionRelative;
             Alpha = 0;
             Scale = Vector2.Zero;
