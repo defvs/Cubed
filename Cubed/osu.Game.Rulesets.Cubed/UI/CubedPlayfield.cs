@@ -6,6 +6,8 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
+using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.Cubed.UI.HUD;
 using osu.Game.Rulesets.UI;
 using osuTK.Graphics;
@@ -38,18 +40,27 @@ namespace osu.Game.Rulesets.Cubed.UI
                     },
                     Children = new Drawable[]
                     {
-                        new PlayfieldBackground()
+                        new PlayfieldBackground(),
+                        gameplayContainer = new Container
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            RelativeSizeAxes = Axes.Both,
+                            FillAspectRatio = 1,
+                            FillMode = FillMode.Fit
+                        }
                     }
                 }
             };
         }
 
         private readonly Container mainContainer;
+        private readonly Container gameplayContainer;
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            mainContainer.Add(HitObjectContainer);
+            gameplayContainer.Add(HitObjectContainer);
         }
     }
 }
