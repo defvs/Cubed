@@ -3,8 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Primitives;
 using osu.Game.Rulesets.Cubed.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
@@ -15,7 +13,6 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
 {
     public class DrawableCubedHitObject : DrawableHitObject<CubedHitObject>
     {
-        private CubedNotePiece notePiece;
         private CubedHitObject hitObject;
 
         public DrawableCubedHitObject(CubedHitObject hitObject)
@@ -32,9 +29,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
             Anchor = Anchor.TopLeft;
             Origin = Anchor.TopLeft;
             Position = hitObject.PositionRelative;
-            Alpha = 0;
-            Scale = Vector2.Zero;
-            AddInternal(notePiece = new CubedNotePiece());
+            AddInternal(new CubedNotePiece());
         }
 
         protected override void UpdateInitialTransforms()
