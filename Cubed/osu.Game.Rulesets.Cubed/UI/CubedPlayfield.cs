@@ -26,18 +26,6 @@ namespace osu.Game.Rulesets.Cubed.UI
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     RelativeSizeAxes = Axes.Both,
-                    Masking = true,
-                    CornerRadius = 7,
-                    BorderThickness = 1.2f,
-                    BorderColour = Color4.White,
-                    Colour = Color4.White,
-                    EdgeEffect = new EdgeEffectParameters
-                    {
-                        Hollow = true,
-                        Radius = 10,
-                        Colour = Color4.Black.Opacity(0.4f),
-                        Type = EdgeEffectType.Shadow,
-                    },
                     Children = new Drawable[]
                     {
                         new PlayfieldBackground(),

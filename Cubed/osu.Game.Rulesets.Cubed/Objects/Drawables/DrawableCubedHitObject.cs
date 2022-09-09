@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
             Size = new Vector2(100);
             RelativePositionAxes = Axes.Both;
             Anchor = Anchor.TopLeft;
-            Origin = Anchor.TopLeft;
+            Origin = Anchor.Centre;
             Position = hitObject.PositionRelative;
             AddInternal(new CubedNotePiece());
         }
