@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
+using osu.Framework.Platform;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Cubed.Beatmaps;
@@ -77,9 +80,21 @@ namespace osu.Game.Rulesets.Cubed
             };
         }
 
-        public override Drawable CreateIcon()
-        {
-            return new SpriteIcon { Icon = OsuIcon.RulesetOsu };
+		public override Drawable CreateIcon() => new ConciergeIcon(this);
+
+        private class ConciergeIcon : Sprite {
+            private readonly CubedRuleset ruleset;
+
+            public ConciergeIcon(CubedRuleset ruleset) {
+                this.ruleset = ruleset;
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(GameHost host) {
+                Texture = new TextureStore(host.Renderer, new TextureLoaderStore(ruleset.CreateResourceStore())).Get("Cubed-logo");
+            }
         }
-    }
+
+		public override string RulesetAPIVersionSupported => CURRENT_RULESET_API_VERSION;
+	}
 }
