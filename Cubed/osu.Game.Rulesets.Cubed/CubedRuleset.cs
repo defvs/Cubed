@@ -94,7 +94,5 @@ namespace osu.Game.Rulesets.Cubed
                 Texture = new TextureStore(host.Renderer, new TextureLoaderStore(ruleset.CreateResourceStore())).Get("Cubed-logo");
             }
         }
-
-		public override string RulesetAPIVersionSupported => CURRENT_RULESET_API_VERSION;
-	}
+    }
 }
