@@ -6,9 +6,13 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Cubed.Replays;
 using osu.Game.Rulesets.Mods;
 
-namespace osu.Game.Rulesets.Cubed.Mods {
-	public class CubedModAutoplay : ModAutoplay {
-		public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
-			=> new ModReplayData(new CubedAutoGenerator(beatmap).Generate(), new ModCreatedUser { Username = "Concierge" });
-	}
+namespace osu.Game.Rulesets.Cubed.Mods
+{
+    public class CubedModAutoplay : ModAutoplay
+    {
+        public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
+        {
+            return new ModReplayData(new CubedAutoGenerator(beatmap).Generate(), new ModCreatedUser { Username = "Concierge" });
+        }
+    }
 }

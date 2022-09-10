@@ -6,7 +6,8 @@ namespace osu.Game.Rulesets.Cubed.UI
 {
     public class CubedPlayfieldAdjustmentContainer : PlayfieldAdjustmentContainer
     {
-        public CubedPlayfieldAdjustmentContainer() {
+        public CubedPlayfieldAdjustmentContainer()
+        {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 

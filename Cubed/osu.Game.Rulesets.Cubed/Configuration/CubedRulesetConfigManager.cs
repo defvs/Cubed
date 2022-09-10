@@ -6,9 +6,7 @@ namespace osu.Game.Rulesets.Cubed.Configuration
     public class CubedRulesetConfigManager : RulesetConfigManager<CubedRulesetSetting>
     {
         public CubedRulesetConfigManager(SettingsStore settings, RulesetInfo ruleset, int? variant = null)
-            : base(settings, ruleset, variant)
-        {
-        }
+            : base(settings, ruleset, variant) {}
 
         protected override void InitialiseDefaults()
         {

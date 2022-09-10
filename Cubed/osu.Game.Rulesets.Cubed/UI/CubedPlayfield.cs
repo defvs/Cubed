@@ -2,21 +2,20 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Effects;
-using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.Cubed.UI.HUD;
 using osu.Game.Rulesets.UI;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Cubed.UI
 {
     [Cached]
     public class CubedPlayfield : Playfield
     {
+        private readonly Container gameplayContainer;
+
+        private readonly Container mainContainer;
+
         public CubedPlayfield()
         {
             InternalChildren = new Drawable[]
@@ -41,9 +40,6 @@ namespace osu.Game.Rulesets.Cubed.UI
                 }
             };
         }
-
-        private readonly Container mainContainer;
-        private readonly Container gameplayContainer;
 
         [BackgroundDependencyLoader]
         private void load()

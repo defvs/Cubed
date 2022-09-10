@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
 {
     public class DrawableCubedHitObject : DrawableHitObject<CubedHitObject>
     {
-        private CubedHitObject hitObject;
+        private readonly CubedHitObject hitObject;
 
         public DrawableCubedHitObject(CubedHitObject hitObject)
             : base(hitObject)
@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
         private void load()
         {
             RelativeSizeAxes = Axes.Both;
-            Size = new Vector2(1/4f);
+            Size = new Vector2(1 / 4f);
             Scale = new Vector2(0.9f);
             RelativePositionAxes = Axes.Both;
             Anchor = Anchor.TopLeft;

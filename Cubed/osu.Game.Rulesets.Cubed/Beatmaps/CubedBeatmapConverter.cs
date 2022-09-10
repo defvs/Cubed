@@ -9,18 +9,24 @@ using osu.Game.Rulesets.Cubed.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 
-namespace osu.Game.Rulesets.Cubed.Beatmaps {
-	public class CubedBeatmapConverter : BeatmapConverter<CubedHitObject> {
-		public CubedBeatmapConverter(IBeatmap beatmap, Ruleset ruleset)
-			: base(beatmap, ruleset) {}
+namespace osu.Game.Rulesets.Cubed.Beatmaps
+{
+    public class CubedBeatmapConverter : BeatmapConverter<CubedHitObject>
+    {
+        public CubedBeatmapConverter(IBeatmap beatmap, Ruleset ruleset)
+            : base(beatmap, ruleset) {}
 
-        public override bool CanConvert() => Beatmap.HitObjects.Any(o => o is IHasPosition);
+        public override bool CanConvert()
+        {
+            return Beatmap.HitObjects.Any(o => o is IHasPosition);
+        }
 
-		protected override IEnumerable<CubedHitObject> ConvertHitObject(
-			HitObject original,
-			IBeatmap beatmap,
-			CancellationToken cancellationToken
-		) {
+        protected override IEnumerable<CubedHitObject> ConvertHitObject(
+            HitObject original,
+            IBeatmap beatmap,
+            CancellationToken cancellationToken
+        )
+        {
             if (!(original is IHasPosition positionedObj)) yield break;
 
             yield return new CubedHitObject
@@ -31,5 +37,5 @@ namespace osu.Game.Rulesets.Cubed.Beatmaps {
                 HitWindows = original.HitWindows
             };
         }
-	}
+    }
 }
