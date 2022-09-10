@@ -3,17 +3,12 @@
 
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects;
-using osu.Game.Rulesets.Objects.Types;
 using osuTK;
 
 namespace osu.Game.Rulesets.Cubed.Objects
 {
     public class CubedHitObject : HitObject
     {
-        public override Judgement CreateJudgement() => new Judgement();
-
-        public Vector2 Position => new Vector2(PositionX * 128, PositionY * 96);
-
         /**
          * X position goes from 0 to 3, starting from X=0 on the left and increasing horizontally rightwards
          */
@@ -23,5 +18,13 @@ namespace osu.Game.Rulesets.Cubed.Objects
          * Y position goes from 0 to 3, starting from Y=0 at the top and increasing vertically downwards
          */
         public int PositionY;
+
+        // ReSharper disable once PossibleLossOfFraction
+        public Vector2 PositionRelative => new Vector2(PositionX / 4f, PositionY / 4f);
+
+        public override Judgement CreateJudgement()
+        {
+            return new Judgement();
+        }
     }
 }

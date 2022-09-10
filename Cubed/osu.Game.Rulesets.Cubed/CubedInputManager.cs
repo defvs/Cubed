@@ -5,15 +5,18 @@ using System.ComponentModel;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.UI;
 
-namespace osu.Game.Rulesets.Cubed {
-	public class CubedInputManager : RulesetInputManager<CubedAction> {
-		public CubedInputManager(RulesetInfo ruleset)
-			: base(ruleset, 0, SimultaneousBindingMode.Unique) {}
-	}
+namespace osu.Game.Rulesets.Cubed
+{
+    public class CubedInputManager : RulesetInputManager<CubedAction>
+    {
+        public CubedInputManager(RulesetInfo ruleset)
+            : base(ruleset, 0, SimultaneousBindingMode.Unique) {}
+    }
 
-	public enum CubedAction {
-		[Description("Row 1 Col 1")] X0Y0,
-    	[Description("Row 1 Col 2")] X1Y0,
+    public enum CubedAction
+    {
+        [Description("Row 1 Col 1")] X0Y0,
+        [Description("Row 1 Col 2")] X1Y0,
         [Description("Row 1 Col 3")] X2Y0,
         [Description("Row 1 Col 4")] X3Y0,
 
@@ -31,5 +34,5 @@ namespace osu.Game.Rulesets.Cubed {
         [Description("Row 4 Col 2")] X1Y3,
         [Description("Row 4 Col 3")] X2Y3,
         [Description("Row 4 Col 4")] X3Y3
-	}
+    }
 }

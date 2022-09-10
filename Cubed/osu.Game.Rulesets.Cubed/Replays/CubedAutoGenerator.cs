@@ -5,22 +5,25 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Cubed.Objects;
 using osu.Game.Rulesets.Replays;
 
-namespace osu.Game.Rulesets.Cubed.Replays {
-	public class CubedAutoGenerator : AutoGenerator<CubedReplayFrame> {
-		public new Beatmap<CubedHitObject> Beatmap => (Beatmap<CubedHitObject>)base.Beatmap;
+namespace osu.Game.Rulesets.Cubed.Replays
+{
+    public class CubedAutoGenerator : AutoGenerator<CubedReplayFrame>
+    {
+        public CubedAutoGenerator(IBeatmap beatmap)
+            : base(beatmap) {}
 
-		public CubedAutoGenerator(IBeatmap beatmap)
-			: base(beatmap) {}
+        public new Beatmap<CubedHitObject> Beatmap => (Beatmap<CubedHitObject>)base.Beatmap;
 
-		protected override void GenerateFrames() {
-			Frames.Add(new CubedReplayFrame());
+        protected override void GenerateFrames()
+        {
+            Frames.Add(new CubedReplayFrame());
 
-			foreach (CubedHitObject hitObject in Beatmap.HitObjects) {
-				Frames.Add(new CubedReplayFrame {
-					Time = hitObject.StartTime
-					// todo: add required inputs and extra frames.
-				});
-			}
-		}
-	}
+            foreach (var hitObject in Beatmap.HitObjects)
+                Frames.Add(new CubedReplayFrame
+                {
+                    Time = hitObject.StartTime
+                    // todo: add required inputs and extra frames.
+                });
+        }
+    }
 }

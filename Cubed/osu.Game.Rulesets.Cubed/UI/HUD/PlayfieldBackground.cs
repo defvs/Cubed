@@ -10,12 +10,8 @@ namespace osu.Game.Rulesets.Cubed.UI.HUD
 {
     public class PlayfieldBackground : CompositeDrawable
     {
-        private readonly Bindable<double> bgDim = new Bindable<double>();
-
-        [Resolved(canBeNull: true)]
-        private CubedRulesetConfigManager config { get; set; }
-
         private readonly Box bg;
+        private readonly Bindable<double> bgDim = new Bindable<double>();
 
         public PlayfieldBackground()
         {
@@ -24,9 +20,11 @@ namespace osu.Game.Rulesets.Cubed.UI.HUD
             {
                 RelativeSizeAxes = Axes.Both,
                 Colour = Color4.Black,
-                AlwaysPresent = true,
+                AlwaysPresent = true
             });
         }
+
+        [Resolved(canBeNull: true)] private CubedRulesetConfigManager config { get; set; }
 
         [BackgroundDependencyLoader]
         private void load()
