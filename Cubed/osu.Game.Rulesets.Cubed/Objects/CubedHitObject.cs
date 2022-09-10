@@ -1,8 +1,11 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Game.Rulesets.Cubed.Judgements;
+using osu.Game.Rulesets.Cubed.Scoring;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects;
+using osu.Game.Rulesets.Scoring;
 using osuTK;
 
 namespace osu.Game.Rulesets.Cubed.Objects
@@ -22,9 +25,8 @@ namespace osu.Game.Rulesets.Cubed.Objects
         // ReSharper disable once PossibleLossOfFraction
         public Vector2 PositionRelative => new Vector2(PositionX / 4f, PositionY / 4f);
 
-        public override Judgement CreateJudgement()
-        {
-            return new Judgement();
-        }
+        public override Judgement CreateJudgement() { return new CubedJudgement(); }
+
+        protected override HitWindows CreateHitWindows() { return new CubedHitWindow(); }
     }
 }
