@@ -24,18 +24,20 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
         [BackgroundDependencyLoader]
         private void load()
         {
-            Size = new Vector2(100);
+            RelativeSizeAxes = Axes.Both;
+            Size = new Vector2(1/4f);
+            Scale = new Vector2(0.9f);
             RelativePositionAxes = Axes.Both;
             Anchor = Anchor.TopLeft;
-            Origin = Anchor.Centre;
+            Origin = Anchor.TopLeft;
             Position = hitObject.PositionRelative;
+            Alpha = 0;
             AddInternal(new CubedNotePiece());
         }
 
         protected override void UpdateInitialTransforms()
         {
             this.FadeInFromZero(200);
-            this.ScaleTo(Vector2.One, 200);
         }
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
