@@ -6,19 +6,24 @@ namespace osu.Game.Rulesets.Cubed.Scoring
     {
         public override bool IsHitResultAllowed(HitResult result)
         {
-            switch (result)
+            return result switch
             {
-                case HitResult.Great:
-                case HitResult.Good:
-                case HitResult.Ok:
-                case HitResult.Meh:
-                case HitResult.Miss:
-                    return true;
-                default:
-                    return false;
-            }
+                HitResult.Perfect => true,
+                HitResult.Great => true,
+                HitResult.Good => true,
+                HitResult.Ok => true,
+                HitResult.Miss => true,
+                _ => false
+            };
         }
 
-        // TODO ? : Implement GetRanges
+        protected override DifficultyRange[] GetRanges() => new[]
+        {
+            new DifficultyRange(HitResult.Perfect, 21, 21, 21),
+            new DifficultyRange(HitResult.Great, 42, 42, 42),
+            new DifficultyRange(HitResult.Good, 84, 84, 84),
+            new DifficultyRange(HitResult.Ok, 168, 168, 168),
+            new DifficultyRange(HitResult.Miss, 400, 400, 400)
+        };
     }
 }
