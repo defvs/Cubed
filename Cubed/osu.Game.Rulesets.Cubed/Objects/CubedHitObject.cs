@@ -32,45 +32,9 @@ namespace osu.Game.Rulesets.Cubed.Objects
             PositionX = positionX;
             PositionY = positionY;
 
-            // Désolé d'avoir écrit ça :'(
-            switch (positionX)
-            {
-                case 0:
-                    switch (positionY)
-                    {
-                        case 0: action = CubedAction.X0Y0; break;
-                        case 1: action = CubedAction.X1Y0; break;
-                        case 2: action = CubedAction.X2Y0; break;
-                        case 3: action = CubedAction.X3Y0; break;
-                    }; break;
-                case 1:
-                    switch (positionY)
-                    {
-                        case 0: action = CubedAction.X0Y1; break;
-                        case 1: action = CubedAction.X1Y1; break;
-                        case 2: action = CubedAction.X2Y1; break;
-                        case 3: action = CubedAction.X3Y1; break;
-                    }; break;
-                case 2:
-                    switch (positionY)
-                    {
-                        case 0: action = CubedAction.X0Y2; break;
-                        case 1: action = CubedAction.X1Y2; break;
-                        case 2: action = CubedAction.X2Y2; break;
-                        case 3: action = CubedAction.X3Y2; break;
-                    }; break;
-                case 3:
-                    switch (positionY)
-                    {
-                        case 0: action = CubedAction.X0Y3; break;
-                        case 1: action = CubedAction.X1Y3; break;
-                        case 2: action = CubedAction.X2Y3; break;
-                        case 3: action = CubedAction.X3Y3; break;
-                    }; break;
-            };
+            action = (CubedAction)(positionX + positionY * 4);
         }
 
-        // ReSharper disable once PossibleLossOfFraction
         public Vector2 PositionRelative => new Vector2(PositionX / 4f, PositionY / 4f);
 
         public override Judgement CreateJudgement() { return new CubedJudgement(); }
