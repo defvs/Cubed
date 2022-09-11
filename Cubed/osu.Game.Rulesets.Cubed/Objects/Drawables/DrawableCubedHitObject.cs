@@ -3,6 +3,8 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Input.Bindings;
+using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Cubed.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
@@ -33,6 +35,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
             Position = hitObject.PositionRelative;
             Alpha = 0;
             AddInternal(new CubedNotePiece());
+            AddInternal(new CubedTouchInput(HitObject.action));
         }
 
         protected override void UpdateInitialTransforms()
@@ -72,6 +75,51 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
                     this.FadeColour(Color4.Red, duration);
                     this.FadeOut(duration, Easing.InQuint).Expire();
                     break;
+            }
+        }
+
+        public class CubedTouchInput : Drawable
+        {
+            private readonly CubedAction action;
+
+            public CubedTouchInput(CubedAction action)
+            {
+                RelativeSizeAxes = Axes.Both;
+
+                this.action = action;
+            }
+
+            [Resolved(canBeNull: true)]
+            private CubedInputManager cubedInputManager { get; set; }
+
+            private KeyBindingContainer<CubedAction> keyBindingContainer;
+
+            protected override void LoadComplete()
+            {
+                keyBindingContainer = cubedInputManager.KeyBindingContainer;
+            }
+
+            protected override bool OnTouchDown(TouchDownEvent e)
+            {
+                keyBindingContainer?.TriggerPressed(action);
+                return true;
+            }
+
+            protected override void OnTouchUp(TouchUpEvent e)
+            {
+                keyBindingContainer?.TriggerReleased(action);
+            }
+
+            protected override bool OnMouseDown(MouseDownEvent e)
+            {
+                keyBindingContainer?.TriggerPressed(action);
+                return base.OnMouseDown(e);
+            }
+
+            protected override void OnMouseUp(MouseUpEvent e)
+            {
+                keyBindingContainer?.TriggerReleased(action);
+                base.OnMouseUp(e);
             }
         }
     }
