@@ -14,12 +14,12 @@ namespace osu.Game.Rulesets.Cubed.Objects
     public class CubedHitObject : HitObject
     {
         /**
-         * X position goes from 0 to 3, starting from X=0 on the left and increasing horizontally rightwards
+         * X position ranges from 0 to 3, starting from 0 on the left and increasing rightwards
          */
         public readonly uint PositionX;
 
         /**
-         * Y position goes from 0 to 3, starting from Y=0 at the top and increasing vertically downwards
+         * Y position ranges from 0 to 3, 0 is the top and it increases downwards
          */
         public readonly uint PositionY;
 
@@ -27,7 +27,8 @@ namespace osu.Game.Rulesets.Cubed.Objects
 
         public CubedHitObject(uint positionX, uint positionY)
         {
-            if (PositionX > 3 || PositionY > 3) throw new ArgumentException("CubedHitObject constucted with an illegal position !");
+            if (PositionX > 3 || PositionY > 3) throw new ArgumentException("CubedHitObject's position is illegal !\n" +
+                "The allowed value range is from 0 to 3.");
 
             PositionX = positionX;
             PositionY = positionY;
@@ -37,8 +38,8 @@ namespace osu.Game.Rulesets.Cubed.Objects
 
         public Vector2 PositionRelative => new Vector2(PositionX / 4f, PositionY / 4f);
 
-        public override Judgement CreateJudgement() { return new CubedJudgement(); }
+        public override Judgement CreateJudgement() => new CubedJudgement();
 
-        protected override HitWindows CreateHitWindows() { return new CubedHitWindow(); }
+        protected override HitWindows CreateHitWindows() => new CubedHitWindow();
     }
 }
