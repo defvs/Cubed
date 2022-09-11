@@ -16,8 +16,12 @@ namespace osu.Game.Rulesets.Cubed.UI
 
         private readonly Container mainContainer;
 
+        public readonly HitObjectContainer hitObjectContainer;
+
         public CubedPlayfield()
         {
+            hitObjectContainer = HitObjectContainer;
+
             InternalChildren = new Drawable[]
             {
                 mainContainer = new Container

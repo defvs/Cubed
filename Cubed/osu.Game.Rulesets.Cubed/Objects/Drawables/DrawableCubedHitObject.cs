@@ -2,10 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Cubed.Objects.Drawables.Pieces;
+using osu.Game.Rulesets.Cubed.UI;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osuTK;
@@ -13,8 +15,10 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Cubed.Objects.Drawables
 {
-    public class DrawableCubedHitObject : DrawableHitObject<CubedHitObject>
+    public class DrawableCubedHitObject : DrawableHitObject<CubedHitObject>, IKeyBindingHandler<CubedAction>
     {
+        [Resolved(CanBeNull = false)]
+        private CubedPlayfield playfield { get; set; }
         private readonly CubedHitObject hitObject;
 
         public DrawableCubedHitObject(CubedHitObject hitObject)
@@ -35,13 +39,24 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
             Position = hitObject.PositionRelative;
             Alpha = 0;
             AddInternal(new CubedNotePiece());
-            AddInternal(new CubedTouchInput(HitObject.action));
+            AddInternal(new CubedTouchInput(hitObject.action));
         }
 
         protected override void UpdateInitialTransforms()
         {
             this.FadeInFromZero(200);
         }
+
+        public virtual bool OnPressed(KeyBindingPressEvent<CubedAction> e)
+        {
+            if (e.Action != hitObject.action) return false;
+
+            if (!isHittable(this, Time.Current)) return false;
+
+            return UpdateResult(true);
+        }
+
+        public virtual void OnReleased(KeyBindingReleaseEvent<CubedAction> e) { }
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
@@ -59,6 +74,12 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
                 return;
 
             ApplyResult(r => r.Type = result);
+        }
+
+        public bool isHittable(DrawableCubedHitObject drawableHitObject, double time /* haha */)
+        {
+            var nextObject = playfield.hitObjectContainer.AliveObjects.GetNext(drawableHitObject);
+            return nextObject == null || time < nextObject.HitObject.StartTime;
         }
 
         protected override void UpdateHitStateTransforms(ArmedState state)
