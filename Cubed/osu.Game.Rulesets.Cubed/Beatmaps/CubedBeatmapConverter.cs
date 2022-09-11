@@ -29,10 +29,8 @@ namespace osu.Game.Rulesets.Cubed.Beatmaps
         {
             if (!(original is IHasPosition positionedObj)) yield break;
 
-            yield return new CubedHitObject
+            yield return new CubedHitObject((uint)(positionedObj.X / 128), (uint)(positionedObj.Y / 96))
             {
-                PositionX = (int)(positionedObj.X / 128),
-                PositionY = (int)(positionedObj.Y / 96),
                 StartTime = original.StartTime,
                 HitWindows = original.HitWindows
             };
