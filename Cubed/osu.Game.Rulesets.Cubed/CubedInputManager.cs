@@ -2,11 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.ComponentModel;
+using osu.Framework.Allocation;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Cubed
 {
+    [Cached]
     public class CubedInputManager : RulesetInputManager<CubedAction>
     {
         public CubedInputManager(RulesetInfo ruleset)
