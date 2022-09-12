@@ -27,11 +27,8 @@ namespace osu.Game.Rulesets.Cubed.Objects
 
         public CubedHitObject(byte positionX, byte positionY)
         {
-            if (PositionX > 3 || PositionY > 3) throw new ArgumentException("CubedHitObject's position is illegal !\n" +
-                "The allowed value range is from 0 to 3.");
-
-            PositionX = positionX;
-            PositionY = positionY;
+            PositionX = Math.Clamp(positionX, (byte)0, (byte)3);
+            PositionY = Math.Clamp(positionY, (byte)0, (byte)3);
 
             action = (CubedAction)(positionX + positionY * 4);
         }
