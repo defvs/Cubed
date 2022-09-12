@@ -37,9 +37,8 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
             Origin = Anchor.Centre;
 
             var actualPosition = hitObject.PositionRelative;
-            actualPosition.X += 1 / 8f /* Centers the object because of Origin = Center */
-                                + 1 / 20f /* Centers the object because of Scale = 0.9 */;
-            actualPosition.Y += 1 / 8f + 1 / 20f;
+            actualPosition.X += 1 / 8f; /* Centers the object because of Origin = Center */
+            actualPosition.Y += 1 / 8f;
 
             Position = actualPosition;
             Alpha = 0;
