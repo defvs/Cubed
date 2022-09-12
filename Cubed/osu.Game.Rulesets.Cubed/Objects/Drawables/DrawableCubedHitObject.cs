@@ -17,8 +17,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
 {
     public class DrawableCubedHitObject : DrawableHitObject<CubedHitObject>, IKeyBindingHandler<CubedAction>
     {
-        [Resolved(CanBeNull = false)]
-        private CubedPlayfield playfield { get; set; }
+        [Resolved(CanBeNull = false)] private CubedPlayfield playfield { get; set; }
         private readonly CubedHitObject hitObject;
 
         public DrawableCubedHitObject(CubedHitObject hitObject)
@@ -31,20 +30,29 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
         private void load()
         {
             RelativeSizeAxes = Axes.Both;
-            Size = new Vector2(1 / 4f);
-            Scale = new Vector2(0.9f);
+            Size = new Vector2(0.25f);
+            Scale = new Vector2(0);
             RelativePositionAxes = Axes.Both;
             Anchor = Anchor.TopLeft;
-            Origin = Anchor.TopLeft;
-            Position = hitObject.PositionRelative;
+            Origin = Anchor.Centre;
+
+            var actualPosition = hitObject.PositionRelative;
+            actualPosition.X += 1 / 8f /* Centers the object because of Origin = Center */
+                                + 1 / 20f /* Centers the object because of Scale = 0.9 */;
+            actualPosition.Y += 1 / 8f + 1 / 20f;
+
+            Position = actualPosition;
             Alpha = 0;
             AddInternal(new CubedNotePiece());
             AddInternal(new CubedTouchInput(hitObject.action));
         }
 
+        protected override double InitialLifetimeOffset => 1000f;
+
         protected override void UpdateInitialTransforms()
         {
             this.FadeInFromZero(200);
+            this.ScaleTo(new Vector2(0.9f), 1000);
         }
 
         public virtual bool OnPressed(KeyBindingPressEvent<CubedAction> e)
@@ -56,14 +64,23 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
             return UpdateResult(true);
         }
 
-        public virtual void OnReleased(KeyBindingReleaseEvent<CubedAction> e) { }
+        public virtual void OnReleased(KeyBindingReleaseEvent<CubedAction> e) {}
+
+        private void applyFadeOut()
+        {
+            this.FadeOutFromOne(100);
+            this.ScaleTo(new Vector2(0.6f), 100, Easing.In);
+        }
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
             if (!userTriggered)
             {
                 if (!hitObject.HitWindows.CanBeHit(timeOffset))
+                {
                     ApplyResult(r => r.Type = HitResult.Miss);
+                    applyFadeOut();
+                }
 
                 return;
             }
@@ -74,6 +91,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
                 return;
 
             ApplyResult(r => r.Type = result);
+            applyFadeOut();
         }
 
         public bool isHittable(DrawableCubedHitObject drawableHitObject, double time /* haha */)
@@ -110,8 +128,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
                 this.action = action;
             }
 
-            [Resolved(canBeNull: true)]
-            private CubedInputManager cubedInputManager { get; set; }
+            [Resolved(canBeNull: true)] private CubedInputManager cubedInputManager { get; set; }
 
             private KeyBindingContainer<CubedAction> keyBindingContainer;
 
