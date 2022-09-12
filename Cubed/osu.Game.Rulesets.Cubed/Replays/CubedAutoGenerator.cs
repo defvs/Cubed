@@ -19,11 +19,16 @@ namespace osu.Game.Rulesets.Cubed.Replays
             Frames.Add(new CubedReplayFrame());
 
             foreach (var hitObject in Beatmap.HitObjects)
-                Frames.Add(new CubedReplayFrame
+            {
+                Frames.Add(new CubedReplayFrame(hitObject.action)
                 {
                     Time = hitObject.StartTime
-                    // todo: add required inputs and extra frames.
                 });
+                Frames.Add(new CubedReplayFrame()
+                {
+                    Time = hitObject.StartTime + KEY_UP_DELAY
+                });
+            }
         }
     }
 }
