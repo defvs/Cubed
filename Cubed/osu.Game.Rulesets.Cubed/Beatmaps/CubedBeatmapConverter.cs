@@ -32,7 +32,6 @@ namespace osu.Game.Rulesets.Cubed.Beatmaps
             yield return new CubedHitObject((uint)(positionedObj.X / 128), (uint)(positionedObj.Y / 96))
             {
                 StartTime = original.StartTime,
-                HitWindows = original.HitWindows
             };
         }
     }
