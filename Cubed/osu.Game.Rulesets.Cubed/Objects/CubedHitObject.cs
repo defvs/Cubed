@@ -16,16 +16,16 @@ namespace osu.Game.Rulesets.Cubed.Objects
         /**
          * X position ranges from 0 to 3, starting from 0 on the left and increasing rightwards
          */
-        public readonly uint PositionX;
+        public readonly ushort PositionX;
 
         /**
          * Y position ranges from 0 to 3, 0 is the top and it increases downwards
          */
-        public readonly uint PositionY;
+        public readonly ushort PositionY;
 
         public readonly CubedAction action;
 
-        public CubedHitObject(uint positionX, uint positionY)
+        public CubedHitObject(ushort positionX, ushort positionY)
         {
             if (PositionX > 3 || PositionY > 3) throw new ArgumentException("CubedHitObject's position is illegal !\n" +
                 "The allowed value range is from 0 to 3.");
