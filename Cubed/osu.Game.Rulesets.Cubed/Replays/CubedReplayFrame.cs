@@ -10,10 +10,6 @@ namespace osu.Game.Rulesets.Cubed.Replays
     {
         public List<CubedAction> Actions = new List<CubedAction>();
 
-        public CubedReplayFrame(CubedAction? button = null)
-        {
-            if (button.HasValue)
-                Actions.Add(button.Value);
-        }
+        public CubedReplayFrame(double time, params CubedAction[] actions) : base(time) { Actions.AddRange(actions); }
     }
 }

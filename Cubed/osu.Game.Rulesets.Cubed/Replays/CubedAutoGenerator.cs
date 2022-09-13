@@ -16,18 +16,12 @@ namespace osu.Game.Rulesets.Cubed.Replays
 
         protected override void GenerateFrames()
         {
-            Frames.Add(new CubedReplayFrame());
+            Frames.Add(new CubedReplayFrame(0));
 
             foreach (var hitObject in Beatmap.HitObjects)
             {
-                Frames.Add(new CubedReplayFrame(hitObject.action)
-                {
-                    Time = hitObject.StartTime
-                });
-                Frames.Add(new CubedReplayFrame()
-                {
-                    Time = hitObject.StartTime + KEY_UP_DELAY
-                });
+                Frames.Add(new CubedReplayFrame(hitObject.StartTime, hitObject.action));
+                Frames.Add(new CubedReplayFrame(hitObject.StartTime + KEY_UP_DELAY));
             }
         }
     }
