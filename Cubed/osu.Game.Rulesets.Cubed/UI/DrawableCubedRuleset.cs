@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Cubed.Replays;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
+using osu.Game.Scoring;
 
 namespace osu.Game.Rulesets.Cubed.UI
 {
@@ -22,30 +23,16 @@ namespace osu.Game.Rulesets.Cubed.UI
         public DrawableCubedRuleset(CubedRuleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
             : base(ruleset, beatmap, mods) {}
 
-        protected override Playfield CreatePlayfield()
-        {
-            return new CubedPlayfield();
-        }
+        protected override Playfield CreatePlayfield() => new CubedPlayfield();
 
-        public override PlayfieldAdjustmentContainer CreatePlayfieldAdjustmentContainer()
-        {
-            return new CubedPlayfieldAdjustmentContainer();
-        }
+        public override PlayfieldAdjustmentContainer CreatePlayfieldAdjustmentContainer() => new CubedPlayfieldAdjustmentContainer();
 
+        protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new CubedFramedReplayInputHandler(replay);
 
-        protected override ReplayInputHandler CreateReplayInputHandler(Replay replay)
-        {
-            return new CubedFramedReplayInputHandler(replay);
-        }
+        protected override ReplayRecorder CreateReplayRecorder(Score score) => new CubedReplayRecorder(score);
 
-        public override DrawableHitObject<CubedHitObject> CreateDrawableRepresentation(CubedHitObject h)
-        {
-            return new DrawableCubedHitObject(h);
-        }
+        public override DrawableHitObject<CubedHitObject> CreateDrawableRepresentation(CubedHitObject h) => new DrawableCubedHitObject(h);
 
-        protected override PassThroughInputManager CreateInputManager()
-        {
-            return new CubedInputManager(Ruleset?.RulesetInfo);
-        }
+        protected override PassThroughInputManager CreateInputManager() => new CubedInputManager(Ruleset?.RulesetInfo);
     }
 }
