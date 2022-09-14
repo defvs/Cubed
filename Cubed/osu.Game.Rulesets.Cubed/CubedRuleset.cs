@@ -49,6 +49,9 @@ namespace osu.Game.Rulesets.Cubed
                 case ModType.Automation:
                     return new[] { new CubedModAutoplay() };
 
+                case ModType.DifficultyIncrease:
+                    return new[] { new CubedModDoubleTime() };
+
                 default:
                     return Array.Empty<Mod>();
             }
