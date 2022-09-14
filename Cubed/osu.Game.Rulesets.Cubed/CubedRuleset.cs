@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Cubed
                     return new[] { new CubedModAutoplay() };
 
                 case ModType.DifficultyIncrease:
-                    return new[] { new CubedModDoubleTime() };
+                    return new[] { new MultiMod(new CubedModDoubleTime(), new CubedModNightcore()) };
 
                 default:
                     return Array.Empty<Mod>();
