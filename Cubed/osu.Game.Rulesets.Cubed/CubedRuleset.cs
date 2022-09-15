@@ -16,6 +16,7 @@ using osu.Game.Rulesets.Cubed.Mods;
 using osu.Game.Rulesets.Cubed.UI;
 using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Cubed
@@ -56,6 +57,14 @@ namespace osu.Game.Rulesets.Cubed
                     return Array.Empty<Mod>();
             }
         }
+
+        protected override IEnumerable<HitResult> GetValidHitResults() => new[] {
+            HitResult.Perfect,
+            HitResult.Great,
+            HitResult.Good,
+            HitResult.Ok,
+            HitResult.Miss
+        };
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0)
         {
