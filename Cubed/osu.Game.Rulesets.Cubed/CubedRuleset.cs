@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -12,11 +13,14 @@ using osu.Framework.Platform;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Cubed.Beatmaps;
 using osu.Game.Rulesets.Cubed.Mods;
+using osu.Game.Rulesets.Cubed.Objects;
 using osu.Game.Rulesets.Cubed.UI;
 using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
+using osu.Game.Scoring;
+using osu.Game.Screens.Ranking.Statistics;
 
 namespace osu.Game.Rulesets.Cubed
 {
@@ -83,7 +87,27 @@ namespace osu.Game.Rulesets.Cubed
             new KeyBinding(InputKey.M, CubedAction.X3Y3)
         };
 
-		public override Drawable CreateIcon() => new ConciergeIcon(this);
+        public override Drawable CreateIcon() => new ConciergeIcon(this);
+
+        public override StatisticRow[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap)
+        {
+            var timedHitEvents = score.HitEvents.Where(e => e.HitObject is CubedHitObject).ToList();
+
+            return new[]
+            {
+                new StatisticRow
+                {
+                    Columns = new[]
+                    {
+                        new StatisticItem("Timing Distribution", () => new HitEventTimingDistributionGraph(timedHitEvents)
+                        {
+                            RelativeSizeAxes = Axes.X,
+                            Height = 250
+                        }, true)
+                    }
+                }
+            };
+        }
 
         private class ConciergeIcon : Sprite {
             private readonly CubedRuleset ruleset;
