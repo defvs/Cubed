@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Cubed
     {
         public override string Description => "Cubed";
 
-        public override string ShortName => "cubed";
+        public override string ShortName => "cubedruleset";
 
         public override string PlayingVerb => "Tapping cubes";
 
