@@ -24,7 +24,10 @@ namespace osu.Game.Rulesets.Cubed
     {
         public override string Description => "Cubed";
 
-        public override string ShortName => "cubedruleset";
+        public override string ShortName => "cubed";
+
+        public override string PlayingVerb => "Tapping cubes";
+
         public override string RulesetAPIVersionSupported => CURRENT_RULESET_API_VERSION;
 
         public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) => new DrawableCubedRuleset(this, beatmap, mods);
