@@ -105,6 +105,17 @@ namespace osu.Game.Rulesets.Cubed
                             Height = 250
                         }, true)
                     }
+                },
+                new StatisticRow
+                {
+                    Columns = new[]
+                    {
+                        new StatisticItem(string.Empty, () => new SimpleStatisticTable(2, new SimpleStatisticItem[]
+                        {
+                            new AverageHitError(timedHitEvents),
+                            new UnstableRate(timedHitEvents)
+                        }), true)
+                    }
                 }
             };
         }
