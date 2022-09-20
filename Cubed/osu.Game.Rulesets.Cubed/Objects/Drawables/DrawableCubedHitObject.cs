@@ -1,11 +1,13 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
+using osu.Framework.Logging;
 using osu.Game.Rulesets.Cubed.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Cubed.UI;
 using osu.Game.Rulesets.Objects.Drawables;
@@ -19,6 +21,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
     {
         [Resolved(CanBeNull = false)] private CubedPlayfield playfield { get; set; }
         private readonly CubedHitObject hitObject;
+        private CubedNotePiece notePiece;
 
         public DrawableCubedHitObject(CubedHitObject hitObject)
             : base(hitObject)
@@ -31,7 +34,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
         {
             RelativeSizeAxes = Axes.Both;
             Size = new Vector2(0.25f);
-            Scale = new Vector2(0);
+            Scale = new Vector2(0.9f);
             RelativePositionAxes = Axes.Both;
             Anchor = Anchor.TopLeft;
             Origin = Anchor.Centre;
@@ -41,35 +44,36 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
             actualPosition.Y += 1 / 8f;
 
             Position = actualPosition;
-            Alpha = 0;
-            AddInternal(new CubedNotePiece());
+            AddInternal(notePiece = new CubedNotePiece());
             AddInternal(new CubedTouchInput(hitObject.action));
         }
 
-        protected override double InitialLifetimeOffset => 1000f;
+        protected override double InitialLifetimeOffset => 500f;
 
+        private bool playedFadeIn;
         protected override void UpdateInitialTransforms()
         {
-            this.FadeInFromZero(200);
-            this.ScaleTo(new Vector2(0.9f), 1000);
+            if (playedFadeIn) return;
+            playedFadeIn = true;
+            notePiece.PlayAnimation(CubedNotePiece.CubedMarkerAnimation.Approach);
+        }
+
+        private bool playedFadeOut;
+        protected override void UpdateStartTimeStateTransforms()
+        {
+            if (playedFadeOut) return;
+            playedFadeOut = true;
+            notePiece.PlayAnimation(CubedNotePiece.CubedMarkerAnimation.Disappear);
         }
 
         public virtual bool OnPressed(KeyBindingPressEvent<CubedAction> e)
         {
             if (e.Action != hitObject.action) return false;
 
-            if (!isHittable(this, Time.Current)) return false;
-
-            return UpdateResult(true);
+            return isHittable(this, Time.Current) && UpdateResult(true);
         }
 
         public virtual void OnReleased(KeyBindingReleaseEvent<CubedAction> e) {}
-
-        private void applyFadeOut()
-        {
-            this.FadeOutFromOne(100);
-            this.ScaleTo(new Vector2(0.6f), 100, Easing.In);
-        }
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
@@ -78,7 +82,6 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
                 if (!hitObject.HitWindows.CanBeHit(timeOffset))
                 {
                     ApplyResult(r => r.Type = HitResult.Miss);
-                    applyFadeOut();
                 }
 
                 return;
@@ -86,34 +89,41 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
 
             var result = HitObject.HitWindows.ResultFor(timeOffset);
 
-            if (result == HitResult.None)
-                return;
+            switch (result)
+            {
+                case HitResult.None: return;
+                /*case HitResult.Miss:
+                    if (timeOffset < 0) // Early Miss
+                        notePiece.PlayAnimation(CubedNotePiece.CubedMarkerAnimation.EarlyMiss);
+                    break;
+                case HitResult.Ok:
+                    notePiece.PlayAnimation(CubedNotePiece.CubedMarkerAnimation.Ok);
+                    break;
+                case HitResult.Good:
+                    notePiece.PlayAnimation(CubedNotePiece.CubedMarkerAnimation.Good);
+                    break;
+                case HitResult.Great:
+                    notePiece.PlayAnimation(CubedNotePiece.CubedMarkerAnimation.Great);
+                    break;
+                case HitResult.Perfect:
+                    notePiece.PlayAnimation(CubedNotePiece.CubedMarkerAnimation.Perfect);
+                    break;*/
+            }
 
             ApplyResult(r => r.Type = result);
-            applyFadeOut();
         }
 
-        public bool isHittable(DrawableCubedHitObject drawableHitObject, double time /* haha */)
+        public bool isHittable(DrawableCubedHitObject drawableHitObject, double time)
         {
             var nextObject = playfield.hitObjectContainer.AliveObjects.GetNext(drawableHitObject);
             return nextObject == null || time < nextObject.HitObject.StartTime;
         }
 
+        protected override double MaximumJudgementOffset => 1000;
+
         protected override void UpdateHitStateTransforms(ArmedState state)
         {
-            const double duration = 200;
-
-            switch (state)
-            {
-                case ArmedState.Hit:
-                    this.FadeOut(duration, Easing.OutQuint).Expire();
-                    break;
-
-                case ArmedState.Miss:
-                    this.FadeColour(Color4.Red, duration);
-                    this.FadeOut(duration, Easing.InQuint).Expire();
-                    break;
-            }
+            this.Delay(1000).Expire();
         }
 
         public class CubedTouchInput : Drawable
