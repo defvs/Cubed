@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Cubed
             switch (type)
             {
                 case ModType.Automation:
-                    return new[] { new CubedModAutoplay() };
+                    return new[] { new MultiMod(new CubedModAutoplay(), new CubedModImprefectAutoplay()) };
 
                 case ModType.DifficultyIncrease:
                     return new[] { new MultiMod(new CubedModDoubleTime(), new CubedModNightcore()) };
