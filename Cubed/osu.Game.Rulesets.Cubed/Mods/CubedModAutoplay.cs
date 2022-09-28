@@ -36,14 +36,8 @@ namespace osu.Game.Rulesets.Cubed.Mods
         // From here, constants 21, 42, 84, 168 are hitwindow sizes
         public void onPresetChange(ValueChangedEvent<Presets> e)
         {
-            switch (e.NewValue)
-            {
-                case Presets.exact:     ArtificialErrorMargin.Value = 0;    break;
-                case Presets.perfect:   ArtificialErrorMargin.Value = 21;   break;
-                case Presets.great:     ArtificialErrorMargin.Value = 42;   break;
-                case Presets.good:      ArtificialErrorMargin.Value = 84;   break;
-                case Presets.ok:        ArtificialErrorMargin.Value = 168;  break;
-            }
+            if (e.NewValue != Presets.custom) 
+                ArtificialErrorMargin.Value = (int) e.NewValue;
         }
 
         public void onValueChanged(ValueChangedEvent<int> e)
@@ -63,16 +57,16 @@ namespace osu.Game.Rulesets.Cubed.Mods
     public enum Presets
     {
         [Description("Exact hits")]
-        exact,
+        exact = 0,
         [Description("Perfect")]
-        perfect,
+        perfect = 21,
         [Description("Great")]
-        great,
+        great = 42,
         [Description("Good")]
-        good,
+        good = 84,
         [Description("Ok")]
-        ok,
+        ok = 168,
         [Description("Custom")]
-        custom
+        custom = 573
     }
 }
