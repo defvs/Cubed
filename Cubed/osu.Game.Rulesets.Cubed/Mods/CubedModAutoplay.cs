@@ -11,8 +11,7 @@ namespace osu.Game.Rulesets.Cubed.Mods
     public class CubedModAutoplay : ModAutoplay
     {
         public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
-        {
-            return new ModReplayData(new CubedAutoGenerator(beatmap).Generate(), new ModCreatedUser { Username = "Concierge" });
-        }
+             => new ModReplayData(new CubedAutoGenerator(beatmap, 0).Generate(),
+                                  new ModCreatedUser { Username = "Concierge" });
     }
 }
