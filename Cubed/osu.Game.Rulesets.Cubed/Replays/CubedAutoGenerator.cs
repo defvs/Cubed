@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Cubed.Replays
         private readonly Random random;
         private readonly double maxOffset;
 
-        public CubedAutoGenerator(IBeatmap beatmap, double maxOffset)
+        public CubedAutoGenerator(IBeatmap beatmap, double maxOffset = 0)
             : base(beatmap)
         {
             if (maxOffset != 0) random = new Random(); 
