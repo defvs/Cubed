@@ -6,12 +6,13 @@ using osu.Framework.Bindables;
 using osu.Framework.Localisation;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
+using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Cubed.Replays;
 using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Cubed.Mods
 {
-    public class CubedModImprefectAutoplay : ModAutoplay
+    public class CubedModImprefectAutoplay : ModAutoplay, IHasSeed
     {
         public override string Name => "Imperfect Autoplay";
 
@@ -34,6 +35,9 @@ namespace osu.Game.Rulesets.Cubed.Mods
             MaxValue = (int) Presets.ok
         };
 
+        [SettingSource("Seed", "Custom seed to use for timing randomization", SettingControlType = typeof(SettingsNumberBox))]
+        public Bindable<int?> Seed { get; } = new Bindable<int?>();
+
         protected double getConvertedMargin(IEnumerable<Mod> mods)
         {
             foreach (Mod mod in mods)
@@ -46,7 +50,7 @@ namespace osu.Game.Rulesets.Cubed.Mods
         }
 
         public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
-            => new ModReplayData(new CubedAutoGenerator(beatmap, getConvertedMargin(mods)).Generate(),
+            => new ModReplayData(new CubedAutoGenerator(beatmap, getConvertedMargin(mods), Seed.Value).Generate(),
                                  new ModCreatedUser { Username = "Concierge" });
 
         public CubedModImprefectAutoplay()
