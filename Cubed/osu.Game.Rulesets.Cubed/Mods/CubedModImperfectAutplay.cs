@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Cubed.Mods
             foreach (Mod mod in mods)
             {
                 if (mod is ModRateAdjust concierge)
-                    return concierge.SpeedChange.Value / ArtificialErrorMargin.Value;
+                    return 1 / concierge.SpeedChange.Value * ArtificialErrorMargin.Value;
             }
 
             return ArtificialErrorMargin.Value;
