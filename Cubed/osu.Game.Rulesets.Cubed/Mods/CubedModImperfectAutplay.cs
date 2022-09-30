@@ -28,10 +28,10 @@ namespace osu.Game.Rulesets.Cubed.Mods
         public Bindable<Presets> preset { get; } = new Bindable<Presets>();
 
         [SettingSource("Error margin", "Maximum timing error")]
-        public BindableInt ArtificialErrorMargin { get; } = new BindableInt(0)
+        public BindableInt ArtificialErrorMargin { get; } = new BindableInt((int) Presets.exact)
         {
-            MinValue = 0,
-            MaxValue = 168,
+            MinValue = (int) Presets.exact,
+            MaxValue = (int) Presets.ok
         };
 
         protected double getConvertedMargin(IEnumerable<Mod> mods)
@@ -65,11 +65,11 @@ namespace osu.Game.Rulesets.Cubed.Mods
         {
             switch (e.NewValue)
             {
-                case 0:
-                case 21:
-                case 42:
-                case 84:
-                case 168:
+                case (int) Presets.exact:
+                case (int) Presets.perfect:
+                case (int) Presets.great:
+                case (int) Presets.good:
+                case (int) Presets.ok:
                     preset.Value = (Presets) e.NewValue;
                     break;
                 default:
