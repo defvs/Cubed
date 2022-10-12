@@ -12,11 +12,13 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Cubed.Beatmaps;
+using osu.Game.Rulesets.Cubed.Edit;
 using osu.Game.Rulesets.Cubed.Mods;
 using osu.Game.Rulesets.Cubed.Objects;
 using osu.Game.Rulesets.Cubed.Scoring;
 using osu.Game.Rulesets.Cubed.UI;
 using osu.Game.Rulesets.Difficulty;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
@@ -40,6 +42,8 @@ namespace osu.Game.Rulesets.Cubed
         public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new CubedBeatmapConverter(beatmap, this);
 
         public override DifficultyCalculator CreateDifficultyCalculator(IWorkingBeatmap beatmap) => new CubedDifficultyCalculator(RulesetInfo, beatmap);
+
+        public override HitObjectComposer CreateHitObjectComposer() => new CubedHitObjectComposer(this);
 
         public override ScoreProcessor CreateScoreProcessor() => new CubedScoreProcessor(this);
 
