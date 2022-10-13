@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
 
         public bool isHittable(DrawableCubedHitObject drawableHitObject, double time /* haha */)
         {
-            var nextObject = playfield.hitObjectContainer.AliveObjects.GetNext(drawableHitObject);
+            var nextObject = playfield.HitObjectContainer.AliveObjects.GetNext(drawableHitObject);
             return nextObject == null || time < nextObject.HitObject.StartTime;
         }
 

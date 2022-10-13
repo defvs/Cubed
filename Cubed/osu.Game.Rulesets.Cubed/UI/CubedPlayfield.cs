@@ -12,43 +12,21 @@ namespace osu.Game.Rulesets.Cubed.UI
     [Cached]
     public class CubedPlayfield : Playfield
     {
-        private readonly Container gameplayContainer;
-
-        private readonly Container mainContainer;
-
-        public readonly HitObjectContainer hitObjectContainer;
-
         public CubedPlayfield()
         {
-            hitObjectContainer = HitObjectContainer;
-
-            InternalChildren = new Drawable[]
+            InternalChild = new Container
             {
-                mainContainer = new Container
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                RelativeSizeAxes = Axes.Both,
+                FillAspectRatio = 1,
+                FillMode = FillMode.Fit,
+                Children = new Drawable[]
                 {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    RelativeSizeAxes = Axes.Both,
-                    Children = new Drawable[]
-                    {
-                        new PlayfieldBackground(),
-                        gameplayContainer = new Container
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            RelativeSizeAxes = Axes.Both,
-                            FillAspectRatio = 1,
-                            FillMode = FillMode.Fit
-                        }
-                    }
+                    new PlayfieldBackground(),
+                    HitObjectContainer
                 }
             };
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            gameplayContainer.Add(HitObjectContainer);
         }
     }
 }
