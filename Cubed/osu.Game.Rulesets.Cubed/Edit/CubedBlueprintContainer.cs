@@ -13,5 +13,7 @@ namespace osu.Game.Rulesets.Cubed.Edit
         public override HitObjectSelectionBlueprint CreateHitObjectBlueprintFor(HitObject hitObject)
             // TODO Use a better approach to this, currently not possible
             => new CubedHitObjectSelectionBlueprint((CubedHitObject) hitObject);
+
+        protected override SelectionHandler<HitObject> CreateSelectionHandler() => new CubedSelectionHandler();
     }
 }
