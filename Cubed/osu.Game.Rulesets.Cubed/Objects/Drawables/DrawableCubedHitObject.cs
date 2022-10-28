@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
@@ -24,6 +25,12 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
             : base(hitObject)
         {
             this.hitObject = hitObject;
+            hitObject.DrawPosition.BindValueChanged(updatePosition);
+        }
+
+        public void updatePosition(ValueChangedEvent<Vector2> e)
+        {
+            Position = e.NewValue;
         }
 
         [BackgroundDependencyLoader]
@@ -36,11 +43,7 @@ namespace osu.Game.Rulesets.Cubed.Objects.Drawables
             Anchor = Anchor.TopLeft;
             Origin = Anchor.Centre;
 
-            var actualPosition = hitObject.PositionRelative;
-            actualPosition.X += 1 / 8f; /* Centers the object because of Origin = Center */
-            actualPosition.Y += 1 / 8f;
-
-            Position = actualPosition;
+            Position = hitObject.DrawPosition.Value;
             Alpha = 0;
             AddInternal(new CubedNotePiece());
             AddInternal(new CubedTouchInput(hitObject.action));

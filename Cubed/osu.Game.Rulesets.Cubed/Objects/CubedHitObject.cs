@@ -37,10 +37,12 @@ namespace osu.Game.Rulesets.Cubed.Objects
             PositionX.Value = Math.Clamp(positionX, (byte)0, (byte)3);
             PositionY.Value = Math.Clamp(positionY, (byte)0, (byte)3);
 
+            DrawPosition.Value = new Vector2(PositionX.Value / 4f + 1 / 8f, PositionY.Value / 4f + 1 / 8f);
+
             action = (CubedAction)(positionX + positionY * 4);
         }
 
-        public Vector2 PositionRelative => new Vector2(PositionX.Value / 4f, PositionY.Value / 4f);
+        public Bindable<Vector2> DrawPosition { get; } = new Bindable<Vector2>();
 
         public override Judgement CreateJudgement() => new CubedJudgement();
 
