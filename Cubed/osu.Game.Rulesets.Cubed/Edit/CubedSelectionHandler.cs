@@ -26,5 +26,69 @@ namespace osu.Game.Rulesets.Cubed.Edit
             }
             return true;
         }
+
+        protected override void OnMouseUp(MouseUpEvent e)
+        {
+            foreach (CubedHitObject hitObject in selectedHitObjects)
+                hitObject.updateDrawPosition();
+        }
+
+        protected override bool OnKeyDown(KeyDownEvent e)
+        {
+            // TODO Refactor this
+            bool shouldStopPropagation = false;
+
+            if (e.ControlPressed)
+            {
+                if (e.PressedKeys.Contains(osuTK.Input.Key.Left))
+                {
+                    foreach (CubedHitObject hitObject in selectedHitObjects)
+                    {
+                        if (hitObject.PositionX.Value > 0)
+                        {
+                            hitObject.PositionX.Value--;
+                            hitObject.updateDrawPosition();
+                        }
+                    } shouldStopPropagation = true;
+                }
+
+                if (e.PressedKeys.Contains(osuTK.Input.Key.Right))
+                {
+                    foreach (CubedHitObject hitObject in selectedHitObjects)
+                    {
+                        if (hitObject.PositionX.Value < 3)
+                        {
+                            hitObject.PositionX.Value++;
+                            hitObject.updateDrawPosition();
+                        }
+                    } shouldStopPropagation = true;
+                }
+
+                if (e.PressedKeys.Contains(osuTK.Input.Key.Down))
+                {
+                    foreach (CubedHitObject hitObject in selectedHitObjects)
+                    {
+                        if (hitObject.PositionY.Value < 3)
+                        {
+                            hitObject.PositionY.Value++;
+                            hitObject.updateDrawPosition();
+                        }
+                    } shouldStopPropagation = true;
+                }
+
+                if (e.PressedKeys.Contains(osuTK.Input.Key.Up))
+                {
+                    foreach (CubedHitObject hitObject in selectedHitObjects)
+                    {
+                        if (hitObject.PositionY.Value > 0)
+                        {
+                            hitObject.PositionY.Value--;
+                            hitObject.updateDrawPosition();
+                        }
+                    } shouldStopPropagation = true;
+                }
+            }
+            return shouldStopPropagation;
+        }
     }
 }
