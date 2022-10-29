@@ -1,4 +1,5 @@
 using System.Linq;
+using osu.Framework.Input.Events;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Cubed.Objects;
 using osu.Game.Rulesets.Objects;
@@ -15,20 +16,15 @@ namespace osu.Game.Rulesets.Cubed.Edit
         {
             foreach (CubedHitObject hitObject in selectedHitObjects)
             {
-                hitObject.DrawPosition.Value = findDrawPosition(moveEvent, hitObject);
+                Vector2 pos = new Vector2(hitObject.DrawPosition.Value.X * DrawWidth, hitObject.DrawPosition.Value.Y * DrawHeight);
+                pos += this.ScreenSpaceDeltaToParentSpace(moveEvent.ScreenSpaceDelta);
+
+                pos.X = System.Math.Clamp(pos.X, 0, DrawWidth) / DrawWidth;
+                pos.Y = System.Math.Clamp(pos.Y, 0, DrawHeight) / DrawHeight;
+
+                hitObject.DrawPosition.Value = pos;
             }
             return true;
-        }
-
-        private Vector2 findDrawPosition(MoveSelectionEvent<HitObject> moveEvent, CubedHitObject hitObject)
-        {
-            Vector2 pos = new Vector2(hitObject.DrawPosition.Value.X * DrawWidth, hitObject.DrawPosition.Value.Y * DrawHeight);
-            pos += this.ScreenSpaceDeltaToParentSpace(moveEvent.ScreenSpaceDelta);
-
-            pos.X = System.Math.Clamp(pos.X, 0, DrawWidth) / DrawWidth;
-            pos.Y = System.Math.Clamp(pos.Y, 0, DrawHeight) / DrawHeight;
-
-            return pos;
         }
     }
 }
