@@ -30,6 +30,8 @@ namespace osu.Game.Rulesets.Cubed.Objects
             MaxValue = 3
         };
 
+        public Bindable<Vector2> DrawPosition { get; } = new Bindable<Vector2>();
+
         public readonly CubedAction action;
 
         public CubedHitObject(byte positionX, byte positionY)
@@ -37,12 +39,22 @@ namespace osu.Game.Rulesets.Cubed.Objects
             PositionX.Value = Math.Clamp(positionX, (byte)0, (byte)3);
             PositionY.Value = Math.Clamp(positionY, (byte)0, (byte)3);
 
-            DrawPosition.Value = new Vector2(PositionX.Value / 4f + 1 / 8f, PositionY.Value / 4f + 1 / 8f);
+            updateDrawPosition();
+            DrawPosition.BindValueChanged(onDrawablePositionChange);
 
             action = (CubedAction)(positionX + positionY * 4);
         }
 
-        public Bindable<Vector2> DrawPosition { get; } = new Bindable<Vector2>();
+        public void updateDrawPosition()
+        {
+            DrawPosition.Value = new Vector2(PositionX.Value / 4f + 1 / 8f, PositionY.Value / 4f + 1 / 8f);
+        }
+
+        private void onDrawablePositionChange(ValueChangedEvent<Vector2> e)
+        {
+            PositionX.Value = e.NewValue.X == 1 ? (byte)3 : (byte)(e.NewValue.X * 4);
+            PositionY.Value = e.NewValue.Y == 1 ? (byte)3 : (byte)(e.NewValue.Y * 4);
+        }
 
         public override Judgement CreateJudgement() => new CubedJudgement();
 
